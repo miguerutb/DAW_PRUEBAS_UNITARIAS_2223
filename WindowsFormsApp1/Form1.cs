@@ -69,5 +69,10 @@ namespace GestionBancariaAppNS
             }
            txtSaldo.Text = obtenerSaldo().ToString();
         }
+
+        private void txtSaldo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

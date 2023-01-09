@@ -45,6 +45,7 @@
             this.txtSaldo.ReadOnly = true;
             this.txtSaldo.Size = new System.Drawing.Size(274, 44);
             this.txtSaldo.TabIndex = 0;
+            this.txtSaldo.TextChanged += new System.EventHandler(this.txtSaldo_TextChanged);
             // 
             // txtCantidad
             // 
