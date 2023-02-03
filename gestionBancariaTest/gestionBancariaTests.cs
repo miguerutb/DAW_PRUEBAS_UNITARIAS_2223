@@ -9,7 +9,7 @@ namespace gestionBancariaTest
     {
 
         [TestMethod]
-        public void validarReintegro()
+        public void validarReintegroNormal()
         {
             //preparacion del caso de prueba
             double saldoInicial = 1000;
@@ -25,7 +25,7 @@ namespace gestionBancariaTest
         }
 
         [TestMethod]
-        public void validarIngreso()
+        public void validarIngresoNormal()
         {
             //preparacion
             double saldoInicial = 1000;
@@ -38,6 +38,35 @@ namespace gestionBancariaTest
             miApp.realizarIngreso(ingreso);
 
             Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error al realizar el integro, saldo incorrecto");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void validarIngresoNegativo()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double ingreso = -200;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            //metodo a probar
+            miApp.realizarIngreso(ingreso);
+        }
+
+        [TestMethod]
+        public void validarIngresoLimite()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double ingreso = 0;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            //metodo a probar
+            miApp.realizarIngreso(ingreso);
+
+            Assert.AreEqual(saldoInicial, miApp.obtenerSaldo(), 0.001, "Se produjo un error al realizar el integro, saldo incorrecto");
         }
     }
 }
