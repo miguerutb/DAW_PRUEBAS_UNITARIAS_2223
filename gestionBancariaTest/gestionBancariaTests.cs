@@ -25,24 +25,50 @@ namespace gestionBancariaTest
         }
 
         [TestMethod]
-        public void validarIngresoNormal()
+        public void validarIngreso1()
         {
             //preparacion
             double saldoInicial = 1000;
-            double ingreso = 200;
-            double saldoEsperado = 1200;
+            double ingreso = -100;
 
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
 
-            //metodo a probar
-            miApp.realizarIngreso(ingreso);
+            try
+            {
+                miApp.realizarIngreso(ingreso);
 
-            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error al realizar el integro, saldo incorrecto");
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+                return;
+            }
+            Assert.Fail("Error. Se deberia haber producido una excepcion.");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void validarIngresoNegativo()
+        public void validarIngreso2()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double ingreso = -1;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            try
+            {
+                miApp.realizarIngreso(ingreso); 
+                
+            } catch (ArgumentOutOfRangeException e)
+            {
+                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+                return;
+            }
+            Assert.Fail("Error. Se deberia haber producido una excepcion.");
+        }
+
+        [TestMethod]
+        public void validarIngreso3()
         {
             //preparacion
             double saldoInicial = 1000;
@@ -50,23 +76,47 @@ namespace gestionBancariaTest
 
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
 
-            //metodo a probar
-            miApp.realizarIngreso(ingreso);
+            try
+            {
+                miApp.realizarIngreso(ingreso);
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+                return;
+            }
+            Assert.Fail("Error. Se deberia haber producido una excepcion.");
         }
 
         [TestMethod]
-        public void validarIngresoLimite()
+        public void validarIngreso4()
         {
             //preparacion
             double saldoInicial = 1000;
-            double ingreso = 0;
+            double ingreso = 1;
+            double saldoEsperado = 1001;
 
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
 
-            //metodo a probar
             miApp.realizarIngreso(ingreso);
 
-            Assert.AreEqual(saldoInicial, miApp.obtenerSaldo(), 0.001, "Se produjo un error al realizar el integro, saldo incorrecto");
+            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
+        }
+
+        [TestMethod]
+        public void validarIngreso5()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double ingreso = 100;
+            double saldoEsperado = 1100;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            miApp.realizarIngreso(ingreso);
+
+            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
         }
     }
 }
