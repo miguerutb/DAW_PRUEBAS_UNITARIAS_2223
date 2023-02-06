@@ -8,212 +8,31 @@ namespace gestionBancariaTest
     public class gestionBancariaTests
     {
         [TestMethod]
-        public void validarReintegro1()
+        public void validarIngresoArray1()
         {
-            //preparacion
+            // Preparación
             double saldoInicial = 1000;
-            double reintegro = -100;
+            double[] ingresos = { -100, -1, 0 };
 
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
 
-            try
+            for (int i = 0; i < ingresos.Length; i++)
             {
-                miApp.realizarReintegro(reintegro);
+                GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
 
+                try
+                {
+                    miApp.realizarIngreso(ingresos[i]);
+                    Assert.Fail("Error. Se deberia haber producido una excepcion.");
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+                }
             }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarReintegro2()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = -1;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarReintegro(reintegro);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarReintegro3()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = 0;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarReintegro(reintegro);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarReintegro4()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = saldoInicial - 1;
-            double saldoEsperado = 1;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            miApp.realizarReintegro(reintegro);
-
-            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
-        }
-
-        [TestMethod]
-        public void validarReintegro5()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = saldoInicial;
-            double saldoEsperado = 0;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            miApp.realizarReintegro(reintegro);
-
-            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
-        }
-
-        [TestMethod]
-        public void validarReintegro6()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = saldoInicial + 1;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarReintegro(reintegro);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_SALDO_INSUFICIENTE);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarReintegro7()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double reintegro = saldoInicial + 100;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarReintegro(reintegro);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_SALDO_INSUFICIENTE);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarIngreso1()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double ingreso = -100;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarIngreso(ingreso);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
         }
 
         [TestMethod]
         public void validarIngreso2()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double ingreso = -1;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarIngreso(ingreso); 
-                
-            } catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarIngreso3()
-        {
-            //preparacion
-            double saldoInicial = 1000;
-            double ingreso = -200;
-
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-
-            try
-            {
-                miApp.realizarIngreso(ingreso);
-
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
-                return;
-            }
-            Assert.Fail("Error. Se deberia haber producido una excepcion.");
-        }
-
-        [TestMethod]
-        public void validarIngreso4()
         {
             //preparacion
             double saldoInicial = 1000;
@@ -228,7 +47,7 @@ namespace gestionBancariaTest
         }
 
         [TestMethod]
-        public void validarIngreso5()
+        public void validarIngreso3()
         {
             //preparacion
             double saldoInicial = 1000;
@@ -240,6 +59,84 @@ namespace gestionBancariaTest
             miApp.realizarIngreso(ingreso);
 
             Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
+        }
+
+        [TestMethod]
+        public void validarReintegroArray1()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double[] reintegro = { -100, -1, 0 };
+
+
+            for (int i = 0; i < reintegro.Length; i++)
+            {
+                GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+                try
+                {
+                    miApp.realizarReintegro(reintegro[i]);
+                    Assert.Fail("Error. Se deberia haber producido una excepcion.");
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    StringAssert.Contains(e.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void validarReintegro2()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double reintegro = saldoInicial - 1;
+            double saldoEsperado = 1;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            miApp.realizarReintegro(reintegro);
+
+            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
+        }
+
+        [TestMethod]
+        public void validarReintegro3()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double reintegro = saldoInicial;
+            double saldoEsperado = 0;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            miApp.realizarReintegro(reintegro);
+
+            Assert.AreEqual(saldoEsperado, miApp.obtenerSaldo(), 0.001, "Se produjo un error.");
+        }
+
+        [TestMethod]
+        public void validarReintegroArray4()
+        {
+            //preparacion
+            double saldoInicial = 1000;
+            double[] reintegro = { saldoInicial + 1, saldoInicial + 1100 };
+
+
+            for (int i = 0; i < reintegro.Length; i++)
+            {
+                GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+                try
+                {
+                    miApp.realizarReintegro(reintegro[i]);
+                    Assert.Fail("Error. Se deberia haber producido una excepcion.");
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    StringAssert.Contains(e.Message, GestionBancariaApp.ERR_SALDO_INSUFICIENTE);
+                }
+            }
         }
     }
 }
